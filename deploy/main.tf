@@ -12,4 +12,7 @@ provider "aws" {
   region = "us-east-1"
   version = "~> 5.17.0"
 }
+locals {
+  prefix = "${var.prefix}-${terraform.workspace}"
+}
 
