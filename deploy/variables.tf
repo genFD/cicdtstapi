@@ -1,7 +1,7 @@
 
 
 variable "project" {
-  default = "recipe-app-api-devops"
+  default = "api-devops"
 }
 
 variable "contact" {
