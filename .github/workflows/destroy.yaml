@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  Staging-destroy:
+    name: Staging destroy
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Staging destroy
+        run: echo "Run terraform DESTROY for staging /"
+
+  Production-destroy:
+    name: Staging destroy
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Production destroy
+        run: echo "Run terraform DESTROY for production /"
