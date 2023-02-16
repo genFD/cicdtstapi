@@ -1,0 +1,16 @@
+name: Continous deployment
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Test-and-lint:
+    name: Test and lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Run Tests
+        run: echo "RUNNING TEST"
