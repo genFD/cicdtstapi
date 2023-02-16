@@ -7,7 +7,6 @@ jobs:
   Staging-destroy:
     name: Staging destroy
     runs-on: ubuntu-22.04
-    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
@@ -18,7 +17,6 @@ jobs:
   Production-destroy:
     name: production destroy
     runs-on: ubuntu-22.04
-    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
