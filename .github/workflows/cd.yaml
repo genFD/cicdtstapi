@@ -16,13 +16,23 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      - name: Setup Terraform
-        uses: hashicorp/terraform
-      - name: Terraform init
-        run: |
-          cd deploy
-          terraform init -backend=false
-          terraform fmt -check
+      - name: Run the build process with Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          image: aschmelyun/cleaver:latest
+          # options: -v ${{ github.workspace }}:/var/www
+          run: |
+            cd deploy
+            terraform init -backend=false
+            terraform fmt -check
+
+      # - name: Setup Terraform
+      #   uses: hashicorp/terraform
+      # - name: Terraform init
+      #   run: |
+      #     cd deploy
+      #     terraform init -backend=false
+      #     terraform fmt -check
 
   Test:
     name: Test
