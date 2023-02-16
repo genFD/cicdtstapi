@@ -10,40 +10,12 @@ on:
       - production
 
 jobs:
-  Terraform:
-    name: Terraform
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./deploy
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-
-      - name: Terraform init and format
-        run: |
-          terraform init -backend=false
-          terraform fmt -check
-
-      # - name: Setup Terraform
-      #   uses: hashicorp/terraform
-      # - name: Terraform init
-      #   run: |
-      #     cd deploy
-      #     terraform init -backend=false
-      #     terraform fmt -check
-
   Test:
     name: Test
     runs-on: ubuntu-22.04
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
-
       - name: Run Tests
         # setup project to run tests with docker compose
         # run: docker-compose run --rm app sh -c "test"
@@ -64,12 +36,24 @@ jobs:
   Validate-terraform:
     name: Terraform validation
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./deploy
     steps:
-      - name: Check out the repository
+      - name: Check out the repo
         uses: actions/checkout@v3
 
-      - name: Terraform Validate
-        run: echo "validate terraform"
+      - name: Setup Terraform
+        uses: addnab/docker-run-action@v3
+        with:
+          image: hashicorp/terraform:latest
+
+      - name: Terraform init and format
+        run: |
+          terraform init -backend=false
+          terraform validate
+          terraform fmt -check
 
   Build-push:
     name: Build and push image
