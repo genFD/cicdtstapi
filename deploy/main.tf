@@ -15,7 +15,7 @@ terraform {
 }
 
 
-locals {
-  prefix = "${var.prefix}-${terraform.workspace}"
-}
+# locals {
+#   prefix = "${var.prefix}-${terraform.workspace}"
+# }
 
