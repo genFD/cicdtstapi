@@ -29,7 +29,7 @@ jobs:
       - name: Lint Check
         # setup project to run lint with docker compose
         # run: docker-compose run --rm app sh -c "test"
-        run: echo "RUNNING LINT"
+        run: echo "RUNNING LINT /"
 
   deploy-staging:
     name: Deploy to staging
@@ -42,7 +42,7 @@ jobs:
       - name: Deploy to staging
         # setup project to run lint with docker compose
         # run: docker-compose run --rm app sh -c "test"
-        run: echo "Deploy to staging code here"
+        run: echo "Deploy to staging code here /"
 
   deploy-production:
     name: Deploy to production
@@ -55,4 +55,4 @@ jobs:
       - name: Deploy to production
         # setup project to run lint with docker compose
         # run: docker-compose run --rm app sh -c "test"
-        run: echo "Deploy to prod code here"
+        run: echo "Deploy to prod code here /"
