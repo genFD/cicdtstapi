@@ -13,16 +13,19 @@ jobs:
   Terraform:
     name: Terraform
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./deploy
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
       - name: Run the build process with Docker
-        uses: addnab/docker-run-action@v3
+        uses: hashicorp/setup-terraform@v2
         with:
           image: hashicorp/terraform
           # options: -v ${{ github.workspace }}:/var/www
           run: |
-            cd ../../deploy/
             terraform init -backend=false
             terraform fmt -check
 
