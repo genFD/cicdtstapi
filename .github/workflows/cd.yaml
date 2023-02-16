@@ -21,9 +21,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
       - name: Run the build process with Docker
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/terraform:latest
         with:
-          image: hashicorp/terraform
+          image: hashicorp/terraform:latest
           # options: -v ${{ github.workspace }}:/var/www
           run: |
             terraform init -backend=false
