@@ -1,12 +1,29 @@
 name: Continous deployment
 # will run job only when main & production push and when PR
+# define an image we need for terraform job
+
 on:
   pull_request:
   push:
     branches:
       - main
       - production
+
 jobs:
+  Terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+      - name: Setup Terraform
+        uses: hashicorp/terraform:1.3.9
+      - name: Terraform init
+        run: |
+          cd deploy
+          terraform init -backend=false
+          terraform fmt -check
+
   Test:
     name: Test
     runs-on: ubuntu-22.04
