@@ -1,4 +1,4 @@
-name: Destroy infracstructure
+name: Destroy infrastructure
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
         run: echo "Run terraform DESTROY for staging /"
 
   Production-destroy:
-    name: Staging destroy
+    name: production destroy
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/production'
     steps:
