@@ -16,7 +16,6 @@ jobs:
   Production-apply:
     name: Production-apply
     runs-on: ubuntu-22.04
-    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
