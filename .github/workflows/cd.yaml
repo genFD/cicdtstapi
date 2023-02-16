@@ -1,5 +1,5 @@
 name: Continous deployment
-# will run job only when main & production push and when PR
+
 on:
   pull_request:
   push:
