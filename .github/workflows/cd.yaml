@@ -1,16 +1,58 @@
 name: Continous deployment
+# will run job only when main & production push and when PR
 on:
   push:
     branches:
-      - master
+      - main
+      - production
+  pull_request:
 
 jobs:
-  Test-and-lint:
-    name: Test and lint
+  test:
+    name: Test
     runs-on: ubuntu-22.04
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
 
       - name: Run Tests
+        # setup project to run tests with docker compose
+        # run: docker-compose run --rm app sh -c "test"
         run: echo "RUNNING TEST"
+  lint:
+    name: Lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Lint Check
+        # setup project to run lint with docker compose
+        # run: docker-compose run --rm app sh -c "test"
+        run: echo "RUNNING LINT"
+
+  deploy-staging:
+    name: Deploy to staging
+    runs-on: ubuntu-22.04
+    needs: [test, lint]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Deploy to staging
+        # setup project to run lint with docker compose
+        # run: docker-compose run --rm app sh -c "test"
+        run: echo "Deploy to staging code here"
+
+  deploy-production:
+    name: Deploy to production
+    runs-on: ubuntu-22.04
+    needs: [test, lint]
+    if: github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Deploy to production
+        # setup project to run lint with docker compose
+        # run: docker-compose run --rm app sh -c "test"
+        run: echo "Deploy to prod code here"
