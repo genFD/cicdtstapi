@@ -1,0 +1,25 @@
+name: Staging deployment
+on:
+  workflow_dispatch:
+
+jobs:
+  Staging-plan:
+    name: Staging plan
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Staging plan
+        run: echo "Run terraform PLAN for staging-PLAN /"
+
+  Staging-apply:
+    name: Staging apply
+    runs-on: ubuntu-22.04
+    needs: [Test, Lint, Validate-terraform]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Staging Apply
+        run: echo "Run terraform APPLY for staging-apply /"
