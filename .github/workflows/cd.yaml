@@ -19,10 +19,10 @@ jobs:
       - name: Run the build process with Docker
         uses: addnab/docker-run-action@v3
         with:
-          image: aschmelyun/cleaver:latest
+          image: hashicorp/terraform
           # options: -v ${{ github.workspace }}:/var/www
           run: |
-            cd deploy
+            cd deploy/
             terraform init -backend=false
             terraform fmt -check
 
