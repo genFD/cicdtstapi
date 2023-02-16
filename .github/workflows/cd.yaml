@@ -54,6 +54,7 @@ jobs:
   Staging-plan:
     name: Staging plan
     runs-on: ubuntu-22.04
+    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
@@ -64,6 +65,7 @@ jobs:
   Staging-apply:
     name: Staging apply
     runs-on: ubuntu-22.04
+    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
@@ -74,6 +76,7 @@ jobs:
   Production-plan:
     name: Production-plan
     runs-on: ubuntu-22.04
+    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
@@ -84,6 +87,7 @@ jobs:
   Production-apply:
     name: Production-apply
     runs-on: ubuntu-22.04
+    needs: [Test, Lint, Validate-terraform]
     if: github.ref == 'refs/heads/production'
     steps:
       - name: Check out the repository
