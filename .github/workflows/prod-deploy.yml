@@ -1,0 +1,25 @@
+name: Production deployment
+on:
+  workflow_dispatch:
+
+jobs:
+  Production-plan:
+    name: Production-plan
+    runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Build and push
+        run: echo "Run terraform PLAN for production-plan /"
+
+  Production-apply:
+    name: Production-apply
+    runs-on: ubuntu-22.04
+    needs: [Test, Lint, Validate-terraform]
+    if: github.ref == 'refs/heads/production'
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Build and push
+        run: echo "Run terraform APPLY for production-apply /"
