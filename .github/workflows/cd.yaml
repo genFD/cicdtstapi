@@ -1,11 +1,13 @@
 name: Continous deployment
 # will run job only when main & production push and when PR
+# define an image we need for terraform job
+
 on:
-  pull_request:
   push:
     branches:
       - main
       - production
+  pull_request:
 jobs:
   Test:
     name: Test
@@ -13,7 +15,6 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
-
       - name: Run Tests
         # setup project to run tests with docker compose
         # run: docker-compose run --rm app sh -c "test"
@@ -23,23 +24,39 @@ jobs:
     name: Lint
     runs-on: ubuntu-22.04
     steps:
-      - name: Check out the repository
+      - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Lint Check
-        # setup project to run lint with docker compose
-        # run: docker-compose run --rm app sh -c "test"
-        run: echo "RUNNING LINT /"
+        # run: echo "RUNNING LINT /"
 
-  Validate-terraform:
-    name: Terraform validation
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
+  # Validate-terraform:
+  #   name: Terraform validation
+  #   runs-on: ubuntu-22.04
+  #   defaults:
+  #     run:
+  #       shell: bash
+  #       working-directory: ./deploy
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v3
 
-      - name: Terraform Validate
-        run: echo "validate terraform"
+  #     - name: Setup Terraform
+  #       uses: addnab/docker-run-action@v3
+  #       with:
+  #         image: hashicorp/terraform:latest
+  #     - name: Terraform init and format
+  #       run: |
+  #         terraform init -backend=false
+  #         terraform validate
+  #         terraform fmt -check
 
   Build-push:
     name: Build and push image

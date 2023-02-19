@@ -6,13 +6,16 @@ terraform {
     encrypt        = true
     dynamodb_table = "app-api-devops-tf-state-lock"
   }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
 }
 
-provider "aws" {
-  region = "us-east-1"
-  version = "~> 5.17.0"
-}
-locals {
-  prefix = "${var.prefix}-${terraform.workspace}"
-}
+
+# locals {
+#   prefix = "${var.prefix}-${terraform.workspace}"
+# }
 
